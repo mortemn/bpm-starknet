@@ -7,3 +7,6 @@
 [submodule "cairo_lib"]
 	url = https://github.com/aspectco/cairo-lib
 	path = lib/cairo_lib
+[submodule "cairo_lib_git"]
+	url = https://github.com/aspectco/cairo-lib.git
+	path = lib/cairo_lib_git
