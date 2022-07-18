@@ -13,3 +13,6 @@
 [submodule "starknet_felt_packing"]
 	url = https://github.com/gaetbout/starknet-felt-packing
 	path = lib/starknet_felt_packing
+[submodule "caistring"]
+	url = https://github.com/topology-gg/caistring
+	path = lib/caistring
