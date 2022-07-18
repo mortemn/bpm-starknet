@@ -10,3 +10,6 @@
 [submodule "cairo_lib_git"]
 	url = https://github.com/aspectco/cairo-lib.git
 	path = lib/cairo_lib_git
+[submodule "starknet_felt_packing"]
+	url = https://github.com/gaetbout/starknet-felt-packing
+	path = lib/starknet_felt_packing
