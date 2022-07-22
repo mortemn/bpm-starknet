@@ -27,6 +27,7 @@ from immutablex.starknet.access.AccessControl import AccessControl, DEFAULT_ADMI
 
 const MINTER_ROLE = 'MINTER_ROLE'
 const BURNER_ROLE = 'BURNER_ROLE'
+const SIZE = 7
 
 #
 # Constructor
