@@ -5,7 +5,9 @@ from starkware.cairo.common.registers import get_label_location
 from starkware.cairo.common.bitwise import bitwise_and
 from starkware.cairo.common.math import unsigned_div_rem
 from starkware.cairo.common.math_cmp import is_le
+from starkware.cairo.common.math import split_int, split_felt
 from starknet_felt_packing.contracts.bits_manipulation import external as bits_manipulation
+from starknet_felt_packing.contracts.pow2 import pow2
 from arrays.array_manipulation import add_last, join
 from cairopen.binary.bits import Bits
 from starkware.cairo.common.alloc import alloc
@@ -13,7 +15,7 @@ from starkware.cairo.common.alloc import alloc
 
 # Gets color/fill from a particular square
 @view
-func getFillFromSquare(square : felt) -> (fill : felt):
+func get_fill_from_square(square : felt) -> (fill : felt):
     let (colors : felt*) = alloc()
     assert colors[0] = '#ffffff'
     assert colors[1] = '#aaaaaa'
@@ -35,74 +37,74 @@ func getFillFromSquare(square : felt) -> (fill : felt):
 end
 
 @view
-func getSquareFromMap{
+func get_square_from_map{
         bitwise_ptr : BitwiseBuiltin*,
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap, actual_index) -> (square : felt):
+    }(bitmap_len, bitmap : felt*, index) -> (square : felt):
     alloc_locals
 
-    let (res : felt) = bits_manipulation.actual_get_element_at(bitmap, actual_index, 8)
+    let x = 64 - index
+    let (e, i) = unsigned_div_rem(x, 32) 
+    let element = bitmap[e]
 
-    # let shift = 252 - (index * 4)
-    # let (shl1 : felt) = Bits.leftshift('15', 252)
-    # let (and : felt) = bitwise_and(shl1, element)
-    # let (square : felt) = Bits.rightshift(shift, and)
-    return (res)
+    let (square : felt) = bits_manipulation.actual_get_element_at(element, i*4, 4)
+
+    return (square)
 end
 
 # Generates a blob of rows.
 @view
-func generateRows{
+func generate_rows{
         bitwise_ptr : BitwiseBuiltin*,
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap, rows_len : felt, rows : felt*, x) -> (rows_len : felt, rows : felt*):
+    }(bitmap_len, bitmap : felt*, rows_len : felt, rows : felt*, x) -> (rows_len : felt, rows : felt*):
     alloc_locals
     if x == 64:
         tempvar bitwise_ptr = bitwise_ptr
-        return (64, rows)
+        return (320, rows)
     end
 
-    let (pixelRow_len, pixelRow) = joinRows(bitmap, 0, rows, 8, x)
+    let (pixelRow_len, pixelRow) = join_rows(bitmap_len, bitmap, 0, rows, 8, x)
     let (res_len, res) = join(rows_len, rows, pixelRow_len, pixelRow)
 
-    return generateRows(bitmap, res_len, res, x+8)
+    return generate_rows(bitmap_len, bitmap, res_len, res, x+8)
 end
 
 # Joins rows that are generated.
 @view
-func joinRows{
+func join_rows{
     bitwise_ptr : BitwiseBuiltin*,
     syscall_ptr : felt*,
     pedersen_ptr : HashBuiltin*,
     range_check_ptr,
-}(bitmap, rows_len, rows : felt*, size, x) -> (res_len, res : felt*):
+}(bitmap_len, bitmap : felt*, rows_len, rows : felt*, size, x) -> (res_len, res : felt*):
     alloc_locals
-    if rows_len == size:
+    if rows_len == size*5:
         return (rows_len, rows)
     end
 
-    let (row_len, row) = generateRow(bitmap, x, rows_len)
+    let (row_len, row) = generate_row(bitmap_len, bitmap, x, rows_len)
     let (res_len, res : felt*) = join(rows_len, rows, row_len, row)
 
-    return joinRows(bitmap, res_len, res, rows_len+1, x)
+    return join_rows(bitmap_len, bitmap, res_len, res, size, x)
 end
 
 
 # Generates a singular row.
 @view
-func generateRow{
+func generate_row{
         bitwise_ptr : BitwiseBuiltin*,
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap, i, y) -> (row_len : felt, row : felt*):
+    }(bitmap_len, bitmap : felt*, i, y) -> (row_len : felt, row : felt*):
     alloc_locals
-    let (square : felt) = getSquareFromMap(bitmap, i)
-    let (fill : felt) = getFillFromSquare(square)
+    let (square : felt) = get_square_from_map(bitmap_len, bitmap, i)
+    let (fill : felt) = get_fill_from_square(square)
 
     let (row : felt*) = alloc()
     assert row[0] = '<rect fill="'
@@ -111,32 +113,28 @@ func generateRow{
     assert row[3] = y
     assert row[4] = '"width="1" height="1" />'
 
-    return (5, row)
+    return (4, row)
 end
 
-# Renders svg version of bitmap. Due to restrictions of felt character limit,
-# felts are stored into arrays.
-# To make the implementation of getFillFromSquare easier, an element on the
-# bitmap stores 28 characters.
 @view
-func renderSvg{
+func render_svg{
         bitwise_ptr : BitwiseBuiltin*,
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap) -> (svg_len : felt, svg : felt*):
+    }(bitmap_len, bitmap : felt*) -> (svg_len, svg : felt*):
     alloc_locals
     let (rows : felt*) = alloc()
-    let (res_len, res : felt*) = generateRows(bitmap, 0, rows, 0)
+    let (res_len : felt, res : felt*) = generate_rows(bitmap_len, bitmap, 0, rows, 0)
 
-    let (string : felt*) = alloc()
-    assert string[0] = '<?xml version="1.0" encoding="'
-    assert string[1] = 'UTF-8" standalone="no"?><svg x'
-    assert string[1] = 'mlns="http://www.w3.org/2000/s'
-    assert string[2] = 'vg" version="1.1" viewBox="0 0'
-    assert string[3] = ' 8 8">'
+    # let (string : felt*) = alloc()
+    # assert string[0] = '<?xml version="1.0" encoding="'
+    # assert string[1] = 'UTF-8" standalone="no"?><svg x'
+    # assert string[2] = 'mlns="http://www.w3.org/2000/s'
+    # assert string[3] = 'vg" version="1.1" viewBox="0 0'
+    # assert string[4] = ' 8 8">'
 
-    let (res1_len : felt, res1 : felt*) = join(1, string, res_len, res)
-    let (svg_len : felt, svg : felt*) = add_last(res1_len, res1, '</svg>')
-    return (svg_len, svg)
+    # let (res1_len, res1 : felt*) = join(5, string, res_len, res)
+    # let (svg_len : felt, svg : felt*) = add_last(res1_len, res1, '</svg>')
+    return (0, rows)
 end

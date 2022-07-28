@@ -9,22 +9,22 @@ from starkware.starknet.common.syscalls import (
 
 @contract_interface
 namespace Bpm:
-    func getFillFromSquare(square : felt) -> (fill : felt):
+    func get_fill_from_square(square : felt) -> (fill : felt):
     end
 
-    func getSquareFromMap(bitmap, actual_index) -> (square : felt):
+    func get_square_from_map(bitmap_len, bitmap : felt*, actual_index) -> (square : felt):
     end
 
-    func generateRows(bitmap_len : felt, bitmap : felt*, rows_len : felt, rows : felt*, x) -> (rows_len : felt, rows : felt*):
+    func generate_rows(bitmap_len : felt, bitmap : felt*, rows_len : felt, rows : felt*, x) -> (rows_len : felt, rows : felt*):
     end
 
-    func joinRows(bitmap_len : felt, bitmap : felt*, rows_len, rows : felt*, size, x) -> (res_len, res : felt*):
+    func join_rows(bitmap_len : felt, bitmap : felt*, rows_len, rows : felt*, size, x) -> (res_len, res : felt*):
     end
 
-    func generateRow(bitmap_len : felt, bitmap : felt*, i, y) -> (row_len : felt, row : felt*):
+    func generate_row(bitmap_len : felt, bitmap : felt*, i, y) -> (row_len : felt, row : felt*):
     end
 
-    func renderSvg(bitmap_len : felt, bitmap : felt*) -> (svg_len : felt, svg : felt*):
+    func render_svg(bitmap_len : felt, bitmap : felt*) -> (svg_len : felt, svg : felt*):
     end
 end
 
@@ -47,14 +47,147 @@ func test_find{
         range_check_ptr,
     }():
     alloc_locals
-    let (local caller: felt) = get_contract_address()
+
     local bpm: felt
     %{ ids.bpm = context.bpm %}
 
-    let bitmap = '0x7624778dedc75f8b322b9fa1632a610d40b85e106c7d9bf0e743a9ce291b9c63'
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
 
-    let (square : felt) = Bpm.getSquareFromMap(bpm, bitmap, 2)
-    %{print(str(ids.square))%}
+    let (square1 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 1)
+    let (square2 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 2)
+    let (square3 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 3)
+    let (square4 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 4)
+    let (square5 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 5)
+
+    tempvar s1 = square1
+    tempvar s2 = square2
+    tempvar s3 = square3
+    tempvar s4 = square4
+    tempvar s5 = square5
+
+    %{print(str(ids.s1))%}
+    %{print(str(ids.s2))%}
+    %{print(str(ids.s3))%}
+    %{print(str(ids.s4))%}
+    %{print(str(ids.s5))%}
+    return ()
+end
+
+@external
+func test_get_fill{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+    }():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+
+    let (square1 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 1)
+    let (color : felt) = Bpm.get_fill_from_square(bpm, square1)
+    
+    %{print(str(ids.square1))%}
+    %{print(ids.color)%}
+    return ()
+end
+
+
+@external
+func test_generate_row{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+}():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    
+    let (row_len, row) = Bpm.generate_row(bpm, 2, bitmap, 1, 0)
+
+    display_array_elements(row_len, row)
+    return ()
+end
+
+@external
+func test_join_rows{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+}():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+
+    let (tmp : felt*) = alloc()
+    let (res_len, res) = Bpm.join_rows(bpm, 2, bitmap, 0, tmp, 8, 0)
+
+    display_array_elements(res_len, res)
+    return ()
+end
+
+@external 
+func test_generate_rows{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+}():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+
+    let (temp : felt*) = alloc()
+
+    let (rows_len, rows) = Bpm.generate_rows(bpm, 2, bitmap, 0, temp, 0)
+
+    display_array_elements(rows_len, rows)
+    return ()
+end
+
+@external
+func test_render_svg{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+}():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+
+    let (res_len, res) = Bpm.render_svg(bpm, 2, bitmap)
+
+    display_array_elements(res_len, res)
     return ()
 end
 
