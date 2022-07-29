@@ -1,2 +1,1 @@
-# starknet-identicon
-# starknet-identicon
+# Bit-Packed Maps on Starknet
