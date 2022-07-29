@@ -9,12 +9,8 @@ cairo-path = ["./lib/cairo_contracts/src"]
 
 ["protostar.contracts"]
 main = [
-  "src/identicon.cairo",
+  "src/bpm.cairo",
 ]
 
 ["protostar.test"]
 stdout-on-success = true
-
-bpm = [
-  "src/bpm.cairo"
-]

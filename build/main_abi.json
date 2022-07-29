@@ -1,197 +1,23 @@
 [
     {
-        "members": [
-            {
-                "name": "low",
-                "offset": 0,
-                "type": "felt"
-            },
-            {
-                "name": "high",
-                "offset": 1,
-                "type": "felt"
-            }
-        ],
-        "name": "Uint256",
-        "size": 2,
-        "type": "struct"
-    },
-    {
-        "data": [
-            {
-                "name": "from_",
-                "type": "felt"
-            },
-            {
-                "name": "to",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "keys": [],
-        "name": "Transfer",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
-                "name": "owner",
-                "type": "felt"
-            },
-            {
-                "name": "approved",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "keys": [],
-        "name": "Approval",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
-                "name": "owner",
-                "type": "felt"
-            },
-            {
-                "name": "operator",
-                "type": "felt"
-            },
-            {
-                "name": "approved",
-                "type": "felt"
-            }
-        ],
-        "keys": [],
-        "name": "ApprovalForAll",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "account",
-                "type": "felt"
-            },
-            {
-                "name": "sender",
-                "type": "felt"
-            }
-        ],
-        "keys": [],
-        "name": "RoleGranted",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "account",
-                "type": "felt"
-            },
-            {
-                "name": "sender",
-                "type": "felt"
-            }
-        ],
-        "keys": [],
-        "name": "RoleRevoked",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "previous_admin_role",
-                "type": "felt"
-            },
-            {
-                "name": "new_admin_role",
-                "type": "felt"
-            }
-        ],
-        "keys": [],
-        "name": "RoleAdminChanged",
-        "type": "event"
-    },
-    {
         "inputs": [
             {
-                "name": "name",
+                "name": "input",
                 "type": "felt"
             },
             {
-                "name": "symbol",
+                "name": "at",
                 "type": "felt"
             },
             {
-                "name": "owner",
-                "type": "felt"
-            },
-            {
-                "name": "default_royalty_receiver",
-                "type": "felt"
-            },
-            {
-                "name": "default_royalty_fee_basis_points",
+                "name": "number_of_bits",
                 "type": "felt"
             }
         ],
-        "name": "constructor",
-        "outputs": [],
-        "type": "constructor"
-    },
-    {
-        "inputs": [
-            {
-                "name": "interfaceId",
-                "type": "felt"
-            }
-        ],
-        "name": "supportsInterface",
+        "name": "actual_get_element_at",
         "outputs": [
             {
-                "name": "success",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-            {
-                "name": "name",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "symbol",
-        "outputs": [
-            {
-                "name": "symbol",
+                "name": "response",
                 "type": "felt"
             }
         ],
@@ -201,69 +27,26 @@
     {
         "inputs": [
             {
-                "name": "owner",
-                "type": "felt"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "Uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "ownerOf",
-        "outputs": [
-            {
-                "name": "owner",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "getApproved",
-        "outputs": [
-            {
-                "name": "approved",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "owner",
+                "name": "input",
                 "type": "felt"
             },
             {
-                "name": "operator",
+                "name": "at",
+                "type": "felt"
+            },
+            {
+                "name": "number_of_bits",
+                "type": "felt"
+            },
+            {
+                "name": "element",
                 "type": "felt"
             }
         ],
-        "name": "isApprovedForAll",
+        "name": "actual_set_element_at",
         "outputs": [
             {
-                "name": "isApproved",
+                "name": "response",
                 "type": "felt"
             }
         ],
@@ -271,15 +54,187 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "contractURI",
-        "outputs": [
+        "inputs": [
             {
-                "name": "contract_uri_len",
+                "name": "arr_len",
                 "type": "felt"
             },
             {
-                "name": "contract_uri",
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "contains",
+        "outputs": [
+            {
+                "name": "contains",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "index_of",
+        "outputs": [
+            {
+                "name": "index",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "min",
+        "outputs": [
+            {
+                "name": "min",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "index_of_min",
+        "outputs": [
+            {
+                "name": "index",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "max",
+        "outputs": [
+            {
+                "name": "max",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "index_of_max",
+        "outputs": [
+            {
+                "name": "index",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "occurrences_of",
+        "outputs": [
+            {
+                "name": "occurrences",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "add_first",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
                 "type": "felt*"
             }
         ],
@@ -289,18 +244,26 @@
     {
         "inputs": [
             {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "tokenURI",
-        "outputs": [
-            {
-                "name": "tokenURI_len",
+                "name": "arr_len",
                 "type": "felt"
             },
             {
-                "name": "tokenURI",
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "add_last",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
                 "type": "felt*"
             }
         ],
@@ -310,38 +273,304 @@
     {
         "inputs": [
             {
-                "name": "tokenId",
-                "type": "Uint256"
-            },
-            {
-                "name": "salePrice",
-                "type": "Uint256"
-            }
-        ],
-        "name": "royaltyInfo",
-        "outputs": [
-            {
-                "name": "receiver",
+                "name": "arr_len",
                 "type": "felt"
             },
             {
-                "name": "royaltyAmount",
-                "type": "Uint256"
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "index",
+                "type": "felt"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "add_at",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
             }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getDefaultRoyalty",
-        "outputs": [
+        "inputs": [
             {
-                "name": "receiver",
+                "name": "arr_len",
                 "type": "felt"
             },
             {
-                "name": "feeBasisPoints",
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "remove_first",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "remove_last",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "index",
+                "type": "felt"
+            }
+        ],
+        "name": "remove_at",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "remove_first_occurence_of",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "remove_last_occurence_of",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "item",
+                "type": "felt"
+            }
+        ],
+        "name": "remove_all_occurences_of",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "name": "reverse",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr1_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr1",
+                "type": "felt*"
+            },
+            {
+                "name": "arr2_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr2",
+                "type": "felt*"
+            }
+        ],
+        "name": "join",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            },
+            {
+                "name": "from_index",
+                "type": "felt"
+            },
+            {
+                "name": "to_index",
+                "type": "felt"
+            }
+        ],
+        "name": "copy_from_to",
+        "outputs": [
+            {
+                "name": "arr_len",
+                "type": "felt"
+            },
+            {
+                "name": "arr",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "square",
+                "type": "felt"
+            }
+        ],
+        "name": "get_fill_from_square",
+        "outputs": [
+            {
+                "name": "fill",
                 "type": "felt"
             }
         ],
@@ -351,19 +580,101 @@
     {
         "inputs": [
             {
-                "name": "role",
+                "name": "bitmap_len",
                 "type": "felt"
             },
             {
-                "name": "account",
+                "name": "bitmap",
+                "type": "felt*"
+            },
+            {
+                "name": "index",
                 "type": "felt"
             }
         ],
-        "name": "hasRole",
+        "name": "get_square_from_map",
         "outputs": [
+            {
+                "name": "square",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "bitmap_len",
+                "type": "felt"
+            },
+            {
+                "name": "bitmap",
+                "type": "felt*"
+            },
+            {
+                "name": "rows_len",
+                "type": "felt"
+            },
+            {
+                "name": "rows",
+                "type": "felt*"
+            },
+            {
+                "name": "x",
+                "type": "felt"
+            }
+        ],
+        "name": "generate_rows",
+        "outputs": [
+            {
+                "name": "rows_len",
+                "type": "felt"
+            },
+            {
+                "name": "rows",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "bitmap_len",
+                "type": "felt"
+            },
+            {
+                "name": "bitmap",
+                "type": "felt*"
+            },
+            {
+                "name": "rows_len",
+                "type": "felt"
+            },
+            {
+                "name": "rows",
+                "type": "felt*"
+            },
+            {
+                "name": "size",
+                "type": "felt"
+            },
+            {
+                "name": "x",
+                "type": "felt"
+            }
+        ],
+        "name": "join_rows",
+        "outputs": [
+            {
+                "name": "res_len",
+                "type": "felt"
+            },
             {
                 "name": "res",
-                "type": "felt"
+                "type": "felt*"
             }
         ],
         "stateMutability": "view",
@@ -372,300 +683,59 @@
     {
         "inputs": [
             {
-                "name": "role",
+                "name": "bitmap_len",
+                "type": "felt"
+            },
+            {
+                "name": "bitmap",
+                "type": "felt*"
+            },
+            {
+                "name": "i",
+                "type": "felt"
+            },
+            {
+                "name": "y",
                 "type": "felt"
             }
         ],
-        "name": "getRoleAdmin",
+        "name": "generate_row",
         "outputs": [
             {
-                "name": "role_admin",
+                "name": "row_len",
                 "type": "felt"
+            },
+            {
+                "name": "row",
+                "type": "felt*"
             }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getMinterRole",
+        "inputs": [
+            {
+                "name": "bitmap_len",
+                "type": "felt"
+            },
+            {
+                "name": "bitmap",
+                "type": "felt*"
+            }
+        ],
+        "name": "render_svg",
         "outputs": [
             {
-                "name": "res",
+                "name": "svg_len",
                 "type": "felt"
+            },
+            {
+                "name": "svg",
+                "type": "felt*"
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getBurnerRole",
-        "outputs": [
-            {
-                "name": "res",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "to",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "approve",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "operator",
-                "type": "felt"
-            },
-            {
-                "name": "approved",
-                "type": "felt"
-            }
-        ],
-        "name": "setApprovalForAll",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "from_",
-                "type": "felt"
-            },
-            {
-                "name": "to",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "transferFrom",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "from_",
-                "type": "felt"
-            },
-            {
-                "name": "to",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            },
-            {
-                "name": "data_len",
-                "type": "felt"
-            },
-            {
-                "name": "data",
-                "type": "felt*"
-            }
-        ],
-        "name": "safeTransferFrom",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "base_token_uri_len",
-                "type": "felt"
-            },
-            {
-                "name": "base_token_uri",
-                "type": "felt*"
-            }
-        ],
-        "name": "setBaseURI",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            },
-            {
-                "name": "tokenURI_len",
-                "type": "felt"
-            },
-            {
-                "name": "tokenURI",
-                "type": "felt*"
-            }
-        ],
-        "name": "setTokenURI",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "resetTokenURI",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "contract_uri_len",
-                "type": "felt"
-            },
-            {
-                "name": "contract_uri",
-                "type": "felt*"
-            }
-        ],
-        "name": "setContractURI",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "receiver",
-                "type": "felt"
-            },
-            {
-                "name": "feeBasisPoints",
-                "type": "felt"
-            }
-        ],
-        "name": "setDefaultRoyalty",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            },
-            {
-                "name": "receiver",
-                "type": "felt"
-            },
-            {
-                "name": "feeBasisPoints",
-                "type": "felt"
-            }
-        ],
-        "name": "setTokenRoyalty",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "resetDefaultRoyalty",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "resetTokenRoyalty",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "account",
-                "type": "felt"
-            },
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "permissionedMint",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "tokenId",
-                "type": "Uint256"
-            }
-        ],
-        "name": "permissionedBurn",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "account",
-                "type": "felt"
-            }
-        ],
-        "name": "grantRole",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "account",
-                "type": "felt"
-            }
-        ],
-        "name": "revokeRole",
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "role",
-                "type": "felt"
-            },
-            {
-                "name": "account",
-                "type": "felt"
-            }
-        ],
-        "name": "renounceRole",
-        "outputs": [],
         "type": "function"
     }
 ]
