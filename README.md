@@ -1,6 +1,6 @@
 ## Bit-Packed Maps on Starknet
 
-This is a library inspired by kadenzipfel's https://github.com/kadenzipfel/bit-packed-map which is originally written in solidity. The goal of this repo is to allow users to store and render svgs on chain (starknet) which little to no gas fee's involved by storing a compact bit-packed map.
+This is a library inspired by kadenzipfel's https://github.com/kadenzipfel/bit-packed-map which was originally written in solidity. The goal of this repo is to allow users to store and render svgs on chain (starknet) which little to no gas fee's involved by storing a compact bit-packed map.
 
 #### Example
 
