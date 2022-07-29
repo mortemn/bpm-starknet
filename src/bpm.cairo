@@ -12,7 +12,6 @@ from arrays.array_manipulation import add_last, join
 from cairopen.binary.bits import Bits
 from starkware.cairo.common.alloc import alloc
 
-
 # Gets color/fill from a particular square
 @view
 func get_fill_from_square(square : felt) -> (fill : felt):
@@ -47,7 +46,8 @@ func get_square_from_map{
 
     let x = 64 - index
     let (e, i) = unsigned_div_rem(x, 32) 
-    let element = bitmap[e]
+    let e1 = bitmap_len-(e+1)
+    let element = bitmap[e1]
 
     let (square : felt) = bits_manipulation.actual_get_element_at(element, i*4, 4)
 
@@ -127,14 +127,14 @@ func render_svg{
     let (rows : felt*) = alloc()
     let (res_len : felt, res : felt*) = generate_rows(bitmap_len, bitmap, 0, rows, 0)
 
-    # let (string : felt*) = alloc()
-    # assert string[0] = '<?xml version="1.0" encoding="'
-    # assert string[1] = 'UTF-8" standalone="no"?><svg x'
-    # assert string[2] = 'mlns="http://www.w3.org/2000/s'
-    # assert string[3] = 'vg" version="1.1" viewBox="0 0'
-    # assert string[4] = ' 8 8">'
+    let (string : felt*) = alloc()
+    assert string[0] = '<?xml version="1.0" encoding="'
+    assert string[1] = 'UTF-8" standalone="no"?><svg x'
+    assert string[2] = 'mlns="http://www.w3.org/2000/s'
+    assert string[3] = 'vg" version="1.1" viewBox="0 0'
+    assert string[4] = ' 8 8">'
 
-    # let (res1_len, res1 : felt*) = join(5, string, res_len, res)
-    # let (svg_len : felt, svg : felt*) = add_last(res1_len, res1, '</svg>')
-    return (0, rows)
+    let (res1_len, res1 : felt*) = join(5, string, res_len, res)
+    let (svg_len : felt, svg : felt*) = add_last(res1_len, res1, '</svg>')
+    return (svg_len, svg)
 end

@@ -52,8 +52,8 @@ func test_find{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
 
     let (square1 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 1)
     let (square2 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 2)
@@ -76,6 +76,28 @@ func test_find{
 end
 
 @external
+func test_render_svg{
+    bitwise_ptr : BitwiseBuiltin*,
+    syscall_ptr : felt*,
+    pedersen_ptr : HashBuiltin*,
+    range_check_ptr,
+}():
+    alloc_locals
+
+    local bpm: felt
+    %{ ids.bpm = context.bpm %}
+
+    let (bitmap : felt*) = alloc()
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+
+    let (res_len, res) = Bpm.render_svg(bpm, 2, bitmap)
+
+    display_array_elements(res_len, res)
+    return ()
+end
+
+@external
 func test_get_fill{
     bitwise_ptr : BitwiseBuiltin*,
     syscall_ptr : felt*,
@@ -88,8 +110,8 @@ func test_get_fill{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
 
     let (square1 : felt) = Bpm.get_square_from_map(bpm, 2, bitmap, 1)
     let (color : felt) = Bpm.get_fill_from_square(bpm, square1)
@@ -113,8 +135,8 @@ func test_generate_row{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
     
     let (row_len, row) = Bpm.generate_row(bpm, 2, bitmap, 1, 0)
 
@@ -135,8 +157,8 @@ func test_join_rows{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
 
     let (tmp : felt*) = alloc()
     let (res_len, res) = Bpm.join_rows(bpm, 2, bitmap, 0, tmp, 8, 0)
@@ -158,36 +180,14 @@ func test_generate_rows{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
+    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
 
     let (temp : felt*) = alloc()
 
     let (rows_len, rows) = Bpm.generate_rows(bpm, 2, bitmap, 0, temp, 0)
 
     display_array_elements(rows_len, rows)
-    return ()
-end
-
-@external
-func test_render_svg{
-    bitwise_ptr : BitwiseBuiltin*,
-    syscall_ptr : felt*,
-    pedersen_ptr : HashBuiltin*,
-    range_check_ptr,
-}():
-    alloc_locals
-
-    local bpm: felt
-    %{ ids.bpm = context.bpm %}
-
-    let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x40b85e106c7d9bf0e743a9ce291b9c63
-    assert bitmap[1] = 0x7624778dedc75f8b322b9fa1632a610d
-
-    let (res_len, res) = Bpm.render_svg(bpm, 2, bitmap)
-
-    display_array_elements(res_len, res)
     return ()
 end
 
