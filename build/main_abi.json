@@ -621,7 +621,11 @@
                 "type": "felt*"
             },
             {
-                "name": "x",
+                "name": "size",
+                "type": "felt"
+            },
+            {
+                "name": "y",
                 "type": "felt"
             }
         ],
@@ -664,6 +668,10 @@
             {
                 "name": "x",
                 "type": "felt"
+            },
+            {
+                "name": "y",
+                "type": "felt"
             }
         ],
         "name": "join_rows",
@@ -692,6 +700,10 @@
             },
             {
                 "name": "i",
+                "type": "felt"
+            },
+            {
+                "name": "x",
                 "type": "felt"
             },
             {

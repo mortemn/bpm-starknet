@@ -10,6 +10,7 @@ from starknet_felt_packing.contracts.bits_manipulation import external as bits_m
 from starknet_felt_packing.contracts.pow2 import pow2
 from arrays.array_manipulation import add_last, join
 from cairopen.binary.bits import Bits
+from caistring.contracts.str import literal_from_number
 from starkware.cairo.common.alloc import alloc
 
 # Gets color/fill from a particular square
@@ -61,17 +62,20 @@ func generate_rows{
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap_len, bitmap : felt*, rows_len : felt, rows : felt*, x) -> (rows_len : felt, rows : felt*):
+    }(bitmap_len, bitmap : felt*, rows_len : felt, rows : felt*, size, y) -> (rows_len : felt, rows : felt*):
     alloc_locals
-    if x == 64:
+    let size_res = size * size * 7
+    if y == (size):
         tempvar bitwise_ptr = bitwise_ptr
-        return (320, rows)
+        return (rows_len, rows)
     end
+    let (tmp : felt*) = alloc()
 
-    let (pixelRow_len, pixelRow) = join_rows(bitmap_len, bitmap, 0, rows, 8, x)
+    let (pixelRow_len, pixelRow) = join_rows(bitmap_len, bitmap, 0, tmp, size, 0, y)
+    %{ print("joined row " + str(ids.y)) %}
     let (res_len, res) = join(rows_len, rows, pixelRow_len, pixelRow)
 
-    return generate_rows(bitmap_len, bitmap, res_len, res, x+8)
+    return generate_rows(bitmap_len, bitmap, res_len, res, size, y+1)
 end
 
 # Joins rows that are generated.
@@ -81,16 +85,18 @@ func join_rows{
     syscall_ptr : felt*,
     pedersen_ptr : HashBuiltin*,
     range_check_ptr,
-}(bitmap_len, bitmap : felt*, rows_len, rows : felt*, size, x) -> (res_len, res : felt*):
+}(bitmap_len, bitmap : felt*, rows_len, rows : felt*, size, x, y) -> (res_len, res : felt*):
     alloc_locals
-    if rows_len == size*5:
+    if x == (size):
         return (rows_len, rows)
     end
+    let index = size * y + (x + 1)
 
-    let (row_len, row) = generate_row(bitmap_len, bitmap, x, rows_len)
+    let (row_len, row) = generate_row(bitmap_len, bitmap, index, x, y)
+
     let (res_len, res : felt*) = join(rows_len, rows, row_len, row)
 
-    return join_rows(bitmap_len, bitmap, res_len, res, size, x)
+    return join_rows(bitmap_len, bitmap, res_len, res, size, x+1, y)
 end
 
 
@@ -101,19 +107,23 @@ func generate_row{
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr,
-    }(bitmap_len, bitmap : felt*, i, y) -> (row_len : felt, row : felt*):
+    }(bitmap_len, bitmap : felt*, i, x, y) -> (row_len : felt, row : felt*):
     alloc_locals
     let (square : felt) = get_square_from_map(bitmap_len, bitmap, i)
     let (fill : felt) = get_fill_from_square(square)
+    let (x_lit : felt) = literal_from_number(x)
+    let (y_lit : felt) = literal_from_number(y)
 
     let (row : felt*) = alloc()
     assert row[0] = '<rect fill="'
     assert row[1] = fill
-    assert row[2] = '" x="0" y="'
-    assert row[3] = y
-    assert row[4] = '"width="1" height="1" />'
+    assert row[2] = '" x="'
+    assert row[3] = x_lit
+    assert row[4] = '" y="'
+    assert row[5] = y_lit
+    assert row[6] = '" width="1" height="1" />'
 
-    return (4, row)
+    return (7, row)
 end
 
 @view
@@ -125,7 +135,7 @@ func render_svg{
     }(bitmap_len, bitmap : felt*) -> (svg_len, svg : felt*):
     alloc_locals
     let (rows : felt*) = alloc()
-    let (res_len : felt, res : felt*) = generate_rows(bitmap_len, bitmap, 0, rows, 0)
+    let (res_len : felt, res : felt*) = generate_rows(bitmap_len, bitmap, 0, rows, 8, 0)
 
     let (string : felt*) = alloc()
     assert string[0] = '<?xml version="1.0" encoding="'
