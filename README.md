@@ -30,4 +30,4 @@ Git clone the repo and run the command `protostar test`
 
 #### Current limitations
 
-So far, a bitmap of an 8x8 image of 4 bit colors can be rendered with 46,536 steps used, which is way below the 1,000,000 step limit. More testing is due to be done to test its limits, feel free to contribute!
+So far, a bitmap of an 8x8 image of 4 bit colors can be rendered with 59,385 steps used, which is way below the 1,000,000 step limit. More testing is due to be done to test its limits, feel free to contribute!
