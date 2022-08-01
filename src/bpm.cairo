@@ -72,7 +72,6 @@ func generate_rows{
     let (tmp : felt*) = alloc()
 
     let (pixelRow_len, pixelRow) = join_rows(bitmap_len, bitmap, 0, tmp, size, 0, y)
-    %{ print("joined row " + str(ids.y)) %}
     let (res_len, res) = join(rows_len, rows, pixelRow_len, pixelRow)
 
     return generate_rows(bitmap_len, bitmap, res_len, res, size, y+1)

@@ -112,8 +112,8 @@ func test_render_svg{
     %{ ids.bpm = context.bpm %}
 
     let (bitmap : felt*) = alloc()
-    assert bitmap[0] = 0x7624778dedc75f8b322b9fa1632a610d
-    assert bitmap[1] = 0x40b85e106c7d9bf0e743a9ce291b9c63
+    assert bitmap[0] = 0x000000000dd0bb000dd2bb2000220220
+    assert bitmap[1] = 0x0ff077000ff277200022022000000000
 
     let (res_len, res) = Bpm.render_svg(bpm, 2, bitmap)
 
